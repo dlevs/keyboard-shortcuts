@@ -41,7 +41,7 @@ const keyNames = swapKeysWithValues(keyCodes);
 let appBuild;
 
 const runBuild = () => {
-	applescript.execString('tell application "System Events" to tell process "Terminal" to keystroke "k" using command down');
+	// applescript.execString('tell application "System Events" to tell process "Terminal" to keystroke "k" using command down');
 
 	if (appBuild) {
 		appBuild.kill();
