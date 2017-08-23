@@ -37,6 +37,11 @@ const keyCodes = {
 };
 const keyNames = swapKeysWithValues(keyCodes);
 
+const typeText = (str) => {
+	const escapedStr = str.replace('"', '\\"');
+	const command = `tell application "System Events" to keystroke "${escapedStr}"`;
+	applescript.execString(command);
+}
 
 let appBuild;
 
@@ -116,16 +121,15 @@ keyboard.on('data', function (data) {
 			exec('open "https://www.google.co.uk/"');
 			break;
 		case 'one':
-			exec('open "https://llxgbs.atlassian.net/secure/Dashboard.jspa?selectPageId=16300"');
+			typeText('test');
 			break;
 		case 'two':
-			exec('open "https://dev04-eu-llxgbs.demandware.net/on/demandware.store/Sites-Site"');
+			typeText('test');
 			break;
 		case 'three':
-			exec('open "https://development-eu-llxgbs.demandware.net/on/demandware.store/Sites-Site"');
+			typeText('dlevett@');
 			break;
 		case 'four':
-			exec('open "https://staging-eu-llxgbs.demandware.net/on/demandware.store/Sites-Site"');
 			break;
 		case 'calculator':
 			exec('open -a "SourceTree"');
