@@ -37,10 +37,39 @@ const keyCodes = {
 };
 const keyNames = swapKeysWithValues(keyCodes);
 
+const delaySteps = (steps, delay) => {
+	// Clone to avoid mutating argument
+	steps = steps.slice();
+
+	if (steps.length) {
+		steps.shift()();
+
+		setTimeout(() => {
+			delaySteps(steps, delay);
+		}, delay);
+	}
+}
+const triggerKey = (key) => {
+	const command = `tell application "System Events" to keystroke ${key}`;
+	applescript.execString(command);
+}
 const typeText = (str) => {
 	const escapedStr = str.replace('"', '\\"');
-	const command = `tell application "System Events" to keystroke "${escapedStr}"`;
-	applescript.execString(command);
+	triggerKey(`"${escapedStr}"`);
+}
+const dssLogin = () => {
+	delaySteps([
+		() => typeText('test'),
+		() => triggerKey('tab'),
+		() => typeText('test'),
+		() => triggerKey('return')
+	], 100);
+}
+const dssCustomerSearch = () => {
+	delaySteps([
+		() => typeText('dlevett@'),
+		() => triggerKey('return')
+	], 100);
 }
 
 let appBuild;
@@ -121,15 +150,10 @@ keyboard.on('data', function (data) {
 			exec('open "https://www.google.co.uk/"');
 			break;
 		case 'one':
-			typeText('test');
+			dssLogin();
 			break;
 		case 'two':
-			typeText('test');
-			break;
-		case 'three':
-			typeText('dlevett@');
-			break;
-		case 'four':
+			dssCustomerSearch();
 			break;
 		case 'calculator':
 			exec('open -a "SourceTree"');
